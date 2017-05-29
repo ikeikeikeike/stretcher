@@ -103,6 +103,7 @@ func getS3(u *url.URL) (io.ReadCloser, error) {
 		log.Println("aws_access_key_id:", AWSAuth.AccessKey)
 	}
 	client := s3.New(AWSAuth, AWSRegion)
+	client.Signature = aws.V4Signature
 	bucket := client.Bucket(u.Host)
 	return bucket.GetReader(u.Path)
 }
